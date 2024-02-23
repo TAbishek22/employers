@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            .container {
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .container > * {
+                padding: 10px;
+                margin: 10px;
+            }
+            input {
+                width: 45%;
+            }
+            button {
+                width: 50%;
+                background-color: rgba(32, 54, 248, 0.705);
+                color: white;
+            }
+        </style>
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Employee Management System</h1>
+            <p id="demo"></p>
+            <ul id="List"></ul>
+            <button id="avgSalary">Calculate Average Salary</button>
+            <input
+                type="text"
+                value=""
+                placeholder="Enter the department (or) click below all employees"
+                name="knadfk"
+                id="marketValue"
+            />
+            <button id="market">Marketing Employees</button>
+            <button id="increase">Increase Salary by 10%</button>
+            <button id="Sort">Sort the Employees by age</button>
+        </div>
+    </body>
+    <script>
+        const employer = [
+            {
+                name: "T.Abishek",
+                age: 19,
+                dept: "ECE",
+                Salary: 40000,
+            },
+            {
+                name: "R.Divakar",
+                age: 19,
+                dept: "Sex Education",
+                Salary: 40000,
+            },
+            {
+                name: "Bhuvi",
+                age: 40,
+                dept: "Home",
+                Salary: 60000,
+            },
+            {
+                name: "B.Thirunavukkarasu",
+                age: 52,
+                dept: "Business",
+                Salary: 72000,
+            },
+            {
+                name: "Abi",
+                age: 20,
+                dept: "Electronics",
+                Salary: 40000,
+            },
+        ];
+        const market = document.getElementById("market");
+        const para = document.getElementById("demo");
+        const list = document.getElementById("List");
+        //Salary
+        let sum = 0;
+        const avg = () => {
+            employer.map((item) => {
+                sum += item["Salary"];
+            });
+            return sum / employer.length;
+        };
+        const avgSalary = document.getElementById("avgSalary");
+        avgSalary.addEventListener("click", () => {
+            para.innerHTML = `Average Salary of All Employees :${avg()} `;
+        });
+
+        //Marketting Employeee
+
+        var input2 = document.getElementById("marketValue");
+        var value4 = "";
+        input2.addEventListener("change", () => {
+            value4 = input2.value;
+        });
+
+        market.addEventListener("click", () => {
+            list.innerHTML = "Employees Are :";
+
+            if (value4 != "") {
+                employer.map((emp) => {
+                    if (value4 === emp["dept"]) {
+                        const li = document.createElement("li");
+                        li.textContent = emp["name"];
+                        list.appendChild(li);
+                    }
+                });
+            } else {
+                list.innerHTML = "All Employees are :";
+                employer.map((emp) => {
+                    const li = document.createElement("li");
+                    li.textContent = emp["name"];
+                    list.appendChild(li);
+                });
+            }
+        });
+        //  para.innerHTML = `Employees of given department : ${
+        //  returnArray().name
+        //}`;
+        //});
+
+        const increase = document.getElementById("increase");
+        increase.addEventListener("click", () => {
+            list.innerHTML = "Increased Salaries Are : ";
+            employer.map((emp) => {
+                emp["Salary"] = Math.round(emp["Salary"] * (110 / 100));
+                const li = document.createElement("li");
+                li.textContent = emp["name"] + " " + emp["Salary"];
+                list.appendChild(li);
+            });
+        });
+
+        const sort = document.getElementById("Sort");
+        const arr = [];
+        sort.addEventListener("click", () => {
+            list.innerHTML = "Sorted Employees :";
+            employer.map((emp) => {
+                arr.push(emp["age"]);
+                arr.sort();
+            });
+            arr.map((emp2, i) => {
+                const li = document.createElement("li");
+                li.textContent = employer[i]["name"] + " " + emp2;
+                list.appendChild(li);
+            });
+        });
+    </script>
+</html>
